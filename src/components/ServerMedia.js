@@ -1,27 +1,26 @@
 import React, { useRef, useEffect, useState } from 'react';
 
 const ServerMedia = () => {
-  const videoRef = useRef(null);
-  const [videoSrc, setVideoSrc] = useState(null);
+  const [gifSrc, setGifSrc] = useState(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchVideo = async () => {
+    const fetchGif = async () => {
       try {
-        const response = await fetch('http://localhost:8080/api/media', {
+        const response = await fetch('https://192.168.4.82:8080/api/media', {
           method: 'POST',
         });
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         const blob = await response.blob();
-        setVideoSrc(URL.createObjectURL(blob));
+        setGifSrc(URL.createObjectURL(blob));
       } catch (error) {
         setError(error.message);
       }
     };
 
-    fetchVideo();
+    fetchGif();
   }, []);
 
   if (error) {
@@ -30,11 +29,8 @@ const ServerMedia = () => {
 
   return (
     <div className="server-media">
-      {videoSrc ? (
-        <video ref={videoRef} controls width="100%">
-          <source src={videoSrc} type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+      {gifSrc ? (
+        <img src={gifSrc} alt="Server fetched content" width="100%" />
       ) : (
         <p>No media available</p>
       )}

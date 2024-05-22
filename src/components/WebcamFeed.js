@@ -2,21 +2,25 @@ import React, { useRef, useEffect, useState } from 'react';
 
 const WebcamFeed = () => {
   const webcamRef = useRef(null);
-  const [streaming, setStreaming] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const getWebcam = async () => {
       try {
-        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        const constraints = {
+          video: {
+            facingMode: 'user' // or { exact: "environment" } for rear camera
+          }
+        };
+        const stream = await navigator.mediaDevices.getUserMedia(constraints);
         if (webcamRef.current) {
           webcamRef.current.srcObject = stream;
-          setStreaming(true);
         } else {
           throw new Error("Webcam ref is not attached");
         }
       } catch (err) {
         setError(err.message);
+        console.error('Error accessing webcam:', err);
       }
     };
 
@@ -35,8 +39,7 @@ const WebcamFeed = () => {
 
   return (
     <div className="webcam-container">
-      <video ref={webcamRef} autoPlay playsInline className="webcam-video" style={{ display: streaming ? 'block' : 'none' }} />
-      {!streaming && <p>Loading camera...</p>}
+      <video ref={webcamRef} autoPlay playsInline className="webcam-video" />
     </div>
   );
 };
