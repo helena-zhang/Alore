@@ -14,6 +14,16 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
 
+### Test Server
+
+There is a test go server for the mp4 video. You will have to put a mp4 video in the same folder as the main.go file and call it sample.mp4.
+To run the server, run the following command in the terminal:
+
+```
+go run main.go
+```
+
+
 ### `npm test`
 
 Launches the test runner in the interactive watch mode.\
