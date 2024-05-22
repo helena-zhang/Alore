@@ -23,6 +23,10 @@ To run the server, run the following command in the terminal:
 go run main.go
 ```
 
+If you don't have go installed, run 
+```
+brew install go
+```
 
 ### `npm test`
 
